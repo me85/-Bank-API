@@ -98,8 +98,18 @@ const transferring = function(id, idToTranse, transferring) {
   console.log("deposite transction");
 };
 
-const getUsers = function() {
-  return "Your users...";
+const getUser = function(id) {
+  let users = loadUsers();
+
+  const userFound = users.find((user) => user.id === id);
+  // saveUsers(users);
+  console.log("id:", userFound.id, "cash:", userFound.cash, "credit:", userFound.credit);
+};
+
+const getUsers = function(id) {
+  let users = loadUsers();
+
+  users.forEach((user) => console.log("id:", user.id, "cash:", user.cash, "credit:", user.credit));
 };
 
 const saveUsers = function(user) {
@@ -118,10 +128,11 @@ const loadUsers = function() {
 };
 
 module.exports = {
-  getUsers: getUsers,
   addUser: addUser,
   deposite: deposite,
   updateCredit: updateCredit,
   withdraw: withdraw,
   transferring: transferring,
+  getUser: getUser,
+  getUsers: getUsers,
 };

@@ -6,34 +6,6 @@ const express = require("express");
 
 const app = express();
 
-// yargs.command({
-//   command: "add",
-//   describe: "Add a new bank user",
-//   builder: {
-//     id: {
-//       describe: "id passport",
-//       demandOption: false,
-//       type: "string",
-//     },
-//     cash: {
-//       describe: "total cash",
-//       demandOption: true,
-//       type: number,
-//     },
-//     credit: {
-//       describe: "total credit ",
-//       demandOption: true,
-//       type: number,
-//     },
-//   },
-//   handler: function(argv) {
-
-//     users.addUser(argv.cash, argv.credit);
-//   },
-// });
-
-// yargs.parse();
-
 // POST method route
 
 app.post("/users", function(req, res) {
@@ -79,6 +51,22 @@ app.post("/users/transferring", function(req, res) {
     idToTranse: idToTranse,
     transferring: transferring,
   });
+});
+
+app.get("/users", function(req, res) {
+  const id = req.query.id;
+
+  users.getUser(id);
+
+  res.send({
+    id: id,
+  });
+});
+
+app.get("/users/allUsers", function(req, res) {
+  users.getUsers();
+
+  res.send("all users in the console");
 });
 
 app.listen(3000, () => {
