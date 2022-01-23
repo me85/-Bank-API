@@ -44,13 +44,41 @@ app.post("/users", function(req, res) {
   res.send({ credit: req.query.credit, cash: req.query.cash });
 });
 
-app.put("/users/:id", function(req, res) {
+app.put("/users/deposite", function(req, res) {
   let cash = req.query.cash;
-  let id = req.query.id;
-
+  let id = String(req.query.id);
   users.deposite(id, cash);
-
   res.send("PUT request to homepage");
+});
+
+app.put("/users/credit", function(req, res) {
+  let credit = req.query.credit;
+  let id = String(req.query.id);
+  users.updateCredit(id, credit);
+  res.send("PUT credit request to homepage");
+});
+
+app.put("/users/withdraw", function(req, res) {
+  let withdraw = req.query.withdraw;
+  let id = String(req.query.id);
+  users.withdraw(id, withdraw);
+  res.send("PUT Withdraw request to homepage");
+});
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.post("/users/transferring", function(req, res) {
+  const id = req.body.id;
+  const idToTranse = req.body.idToTranse;
+  const transferring = req.body.transferring;
+  users.transferring(id, idToTranse, transferring);
+
+  res.send({
+    user_id: id,
+    idToTranse: idToTranse,
+    transferring: transferring,
+  });
 });
 
 app.listen(3000, () => {
